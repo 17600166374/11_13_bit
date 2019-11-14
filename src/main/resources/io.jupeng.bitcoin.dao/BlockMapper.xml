@@ -35,14 +35,14 @@
     delete from block
     where block_id = #{blockId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.Block">
-    insert into block (block_id, blockhash, height, 
+  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.Block" useGeneratedKeys="true" keyProperty="blockId">
+    insert into block ( blockhash, height,
       time, miner, sizeOnDisk, 
       confirmations, txSize, difficulty, 
       merkle_root, bits, version, 
       weight, block_reward, fee_reward, 
       transaction_volume, nonce)
-    values (#{blockId,jdbcType=INTEGER}, #{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER}, 
+    values (#{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER},
       #{time,jdbcType=BIGINT}, #{miner,jdbcType=VARCHAR}, #{sizeondisk,jdbcType=INTEGER}, 
       #{confirmations,jdbcType=INTEGER}, #{txsize,jdbcType=INTEGER}, #{difficulty,jdbcType=DOUBLE}, 
       #{merkleRoot,jdbcType=CHAR}, #{bits,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, 

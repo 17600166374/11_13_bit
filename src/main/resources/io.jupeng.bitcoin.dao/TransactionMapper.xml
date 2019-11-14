@@ -32,8 +32,8 @@
     delete from transaction
     where transaction_id = #{transactionId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.Transaction">
-    insert into transaction (transaction_id, txid, txhash, 
+  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.Transaction" useGeneratedKeys="true" keyProperty="transactionId">
+    insert into transaction ( txid, txhash,
       time, amount, fees, confirmations, 
       status, sizeOnDisk, weight, 
       total_input, total_output, fee_per_byte, 

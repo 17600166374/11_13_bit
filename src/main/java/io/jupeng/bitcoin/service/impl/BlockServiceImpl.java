@@ -1,13 +1,17 @@
 package io.jupeng.bitcoin.service.impl;
-
 import com.alibaba.fastjson.JSONObject;
 
 import io.jupeng.bitcoin.client.BitcoinRest;
 import io.jupeng.bitcoin.dao.BlockMapper;
+import io.jupeng.bitcoin.dao.TransactionMapper;
 import io.jupeng.bitcoin.po.Block;
+import io.jupeng.bitcoin.po.Transaction;
 import io.jupeng.bitcoin.service.BlockService;
+import io.jupeng.bitcoin.service.TranSactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class BlockServiceImpl implements BlockService {
@@ -17,6 +21,8 @@ public class BlockServiceImpl implements BlockService {
 
     @Autowired
     private BitcoinRest bitcoinRest;
+    @Autowired
+    private TransactionServiceImpl transactionService;
 
     @Override
     public String syncBlock(String blockhash) {
@@ -38,6 +44,16 @@ public class BlockServiceImpl implements BlockService {
         //todo calculate tx volume, fee
 
         blockMapper.insert(block);
+
+        Integer blockId = block.getBlockId();
+        Integer confirmations = block.getConfirmations();
+        Long time = block.getTime();
+
+
+        ArrayList<String> txids= (ArrayList<String>) blockJson.get("tx");
+        for(String txid:txids){
+
+        }
 
         String nextblockhash = blockJson.getString("nextblockhash");
         return nextblockhash;
