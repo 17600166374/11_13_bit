@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cjf.bitcoinexplorerback.dao.TransactionDetailMapper">
+  <resultMap id="BaseResultMap" type="io.cjf.bitcoinexplorerback.po.TransactionDetail">
+    <id column="tx_detail_id" jdbcType="BIGINT" property="txDetailId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tx_detail_id, address, type, amount, transaction_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_detail
+    where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from transaction_detail
+    where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail">
+    insert into transaction_detail (tx_detail_id, address, type, 
+      amount, transaction_id)
+    values (#{txDetailId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{amount,jdbcType=DOUBLE}, #{transactionId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail">
+    insert into transaction_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="txDetailId != null">
+        tx_detail_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="txDetailId != null">
+        #{txDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail">
+    update transaction_detail
+    <set>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionId != null">
+        transaction_id = #{transactionId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail">
+    update transaction_detail
+    set address = #{address,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      amount = #{amount,jdbcType=DOUBLE},
+      transaction_id = #{transactionId,jdbcType=INTEGER}
+    where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cjf.bitcoinexplorerback.dao.BlockMapper">
+  <resultMap id="BaseResultMap" type="io.cjf.bitcoinexplorerback.po.Block">
+    <id column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="blockhash" jdbcType="CHAR" property="blockhash" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="miner" jdbcType="VARCHAR" property="miner" />
+    <result column="sizeOnDisk" jdbcType="INTEGER" property="sizeondisk" />
+    <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+    <result column="txSize" jdbcType="INTEGER" property="txsize" />
+    <result column="difficulty" jdbcType="DOUBLE" property="difficulty" />
+    <result column="merkle_root" jdbcType="CHAR" property="merkleRoot" />
+    <result column="bits" jdbcType="INTEGER" property="bits" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="block_reward" jdbcType="DOUBLE" property="blockReward" />
+    <result column="fee_reward" jdbcType="DOUBLE" property="feeReward" />
+    <result column="transaction_volume" jdbcType="DOUBLE" property="transactionVolume" />
+    <result column="nonce" jdbcType="VARCHAR" property="nonce" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    block_id, blockhash, height, time, miner, sizeOnDisk, confirmations, txSize, difficulty, 
+    merkle_root, bits, version, weight, block_reward, fee_reward, transaction_volume, 
+    nonce
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from block
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from block
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.Block">
+    insert into block (block_id, blockhash, height, 
+      time, miner, sizeOnDisk, 
+      confirmations, txSize, difficulty, 
+      merkle_root, bits, version, 
+      weight, block_reward, fee_reward, 
+      transaction_volume, nonce)
+    values (#{blockId,jdbcType=INTEGER}, #{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER}, 
+      #{time,jdbcType=BIGINT}, #{miner,jdbcType=VARCHAR}, #{sizeondisk,jdbcType=INTEGER}, 
+      #{confirmations,jdbcType=INTEGER}, #{txsize,jdbcType=INTEGER}, #{difficulty,jdbcType=DOUBLE}, 
+      #{merkleRoot,jdbcType=CHAR}, #{bits,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=INTEGER}, #{blockReward,jdbcType=DOUBLE}, #{feeReward,jdbcType=DOUBLE}, 
+      #{transactionVolume,jdbcType=DOUBLE}, #{nonce,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="io.cjf.bitcoinexplorerback.po.Block">
+    insert into block
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blockId != null">
+        block_id,
+      </if>
+      <if test="blockhash != null">
+        blockhash,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="miner != null">
+        miner,
+      </if>
+      <if test="sizeondisk != null">
+        sizeOnDisk,
+      </if>
+      <if test="confirmations != null">
+        confirmations,
+      </if>
+      <if test="txsize != null">
+        txSize,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="merkleRoot != null">
+        merkle_root,
+      </if>
+      <if test="bits != null">
+        bits,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="blockReward != null">
+        block_reward,
+      </if>
+      <if test="feeReward != null">
+        fee_reward,
+      </if>
+      <if test="transactionVolume != null">
+        transaction_volume,
+      </if>
+      <if test="nonce != null">
+        nonce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blockId != null">
+        #{blockId,jdbcType=INTEGER},
+      </if>
+      <if test="blockhash != null">
+        #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="miner != null">
+        #{miner,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeondisk != null">
+        #{sizeondisk,jdbcType=INTEGER},
+      </if>
+      <if test="confirmations != null">
+        #{confirmations,jdbcType=INTEGER},
+      </if>
+      <if test="txsize != null">
+        #{txsize,jdbcType=INTEGER},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="merkleRoot != null">
+        #{merkleRoot,jdbcType=CHAR},
+      </if>
+      <if test="bits != null">
+        #{bits,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="blockReward != null">
+        #{blockReward,jdbcType=DOUBLE},
+      </if>
+      <if test="feeReward != null">
+        #{feeReward,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionVolume != null">
+        #{transactionVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="nonce != null">
+        #{nonce,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="io.cjf.bitcoinexplorerback.po.Block">
+    update block
+    <set>
+      <if test="blockhash != null">
+        blockhash = #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="miner != null">
+        miner = #{miner,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeondisk != null">
+        sizeOnDisk = #{sizeondisk,jdbcType=INTEGER},
+      </if>
+      <if test="confirmations != null">
+        confirmations = #{confirmations,jdbcType=INTEGER},
+      </if>
+      <if test="txsize != null">
+        txSize = #{txsize,jdbcType=INTEGER},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="merkleRoot != null">
+        merkle_root = #{merkleRoot,jdbcType=CHAR},
+      </if>
+      <if test="bits != null">
+        bits = #{bits,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="blockReward != null">
+        block_reward = #{blockReward,jdbcType=DOUBLE},
+      </if>
+      <if test="feeReward != null">
+        fee_reward = #{feeReward,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionVolume != null">
+        transaction_volume = #{transactionVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="nonce != null">
+        nonce = #{nonce,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.cjf.bitcoinexplorerback.po.Block">
+    update block
+    set blockhash = #{blockhash,jdbcType=CHAR},
+      height = #{height,jdbcType=INTEGER},
+      time = #{time,jdbcType=BIGINT},
+      miner = #{miner,jdbcType=VARCHAR},
+      sizeOnDisk = #{sizeondisk,jdbcType=INTEGER},
+      confirmations = #{confirmations,jdbcType=INTEGER},
+      txSize = #{txsize,jdbcType=INTEGER},
+      difficulty = #{difficulty,jdbcType=DOUBLE},
+      merkle_root = #{merkleRoot,jdbcType=CHAR},
+      bits = #{bits,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=INTEGER},
+      block_reward = #{blockReward,jdbcType=DOUBLE},
+      fee_reward = #{feeReward,jdbcType=DOUBLE},
+      transaction_volume = #{transactionVolume,jdbcType=DOUBLE},
+      nonce = #{nonce,jdbcType=VARCHAR}
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </update>
+</mapper>

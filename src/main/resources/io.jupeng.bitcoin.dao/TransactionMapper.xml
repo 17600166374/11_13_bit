@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cjf.bitcoinexplorerback.dao.TransactionMapper">
+  <resultMap id="BaseResultMap" type="io.cjf.bitcoinexplorerback.po.Transaction">
+    <id column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+    <result column="txid" jdbcType="CHAR" property="txid" />
+    <result column="txhash" jdbcType="CHAR" property="txhash" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="fees" jdbcType="DOUBLE" property="fees" />
+    <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="sizeOnDisk" jdbcType="INTEGER" property="sizeondisk" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="total_input" jdbcType="DOUBLE" property="totalInput" />
+    <result column="total_output" jdbcType="DOUBLE" property="totalOutput" />
+    <result column="fee_per_byte" jdbcType="DOUBLE" property="feePerByte" />
+    <result column="fee_per_weight_unit" jdbcType="DOUBLE" property="feePerWeightUnit" />
+    <result column="block_id" jdbcType="INTEGER" property="blockId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    transaction_id, txid, txhash, time, amount, fees, confirmations, status, sizeOnDisk, 
+    weight, total_input, total_output, fee_per_byte, fee_per_weight_unit, block_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transaction
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.Transaction">
+    insert into transaction (transaction_id, txid, txhash, 
+      time, amount, fees, confirmations, 
+      status, sizeOnDisk, weight, 
+      total_input, total_output, fee_per_byte, 
+      fee_per_weight_unit, block_id)
+    values (#{transactionId,jdbcType=INTEGER}, #{txid,jdbcType=CHAR}, #{txhash,jdbcType=CHAR}, 
+      #{time,jdbcType=BIGINT}, #{amount,jdbcType=DOUBLE}, #{fees,jdbcType=DOUBLE}, #{confirmations,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{sizeondisk,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, 
+      #{totalInput,jdbcType=DOUBLE}, #{totalOutput,jdbcType=DOUBLE}, #{feePerByte,jdbcType=DOUBLE}, 
+      #{feePerWeightUnit,jdbcType=DOUBLE}, #{blockId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="io.cjf.bitcoinexplorerback.po.Transaction">
+    insert into transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="txid != null">
+        txid,
+      </if>
+      <if test="txhash != null">
+        txhash,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="fees != null">
+        fees,
+      </if>
+      <if test="confirmations != null">
+        confirmations,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="sizeondisk != null">
+        sizeOnDisk,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="totalInput != null">
+        total_input,
+      </if>
+      <if test="totalOutput != null">
+        total_output,
+      </if>
+      <if test="feePerByte != null">
+        fee_per_byte,
+      </if>
+      <if test="feePerWeightUnit != null">
+        fee_per_weight_unit,
+      </if>
+      <if test="blockId != null">
+        block_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=INTEGER},
+      </if>
+      <if test="txid != null">
+        #{txid,jdbcType=CHAR},
+      </if>
+      <if test="txhash != null">
+        #{txhash,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="fees != null">
+        #{fees,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmations != null">
+        #{confirmations,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="sizeondisk != null">
+        #{sizeondisk,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="totalInput != null">
+        #{totalInput,jdbcType=DOUBLE},
+      </if>
+      <if test="totalOutput != null">
+        #{totalOutput,jdbcType=DOUBLE},
+      </if>
+      <if test="feePerByte != null">
+        #{feePerByte,jdbcType=DOUBLE},
+      </if>
+      <if test="feePerWeightUnit != null">
+        #{feePerWeightUnit,jdbcType=DOUBLE},
+      </if>
+      <if test="blockId != null">
+        #{blockId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="io.cjf.bitcoinexplorerback.po.Transaction">
+    update transaction
+    <set>
+      <if test="txid != null">
+        txid = #{txid,jdbcType=CHAR},
+      </if>
+      <if test="txhash != null">
+        txhash = #{txhash,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="fees != null">
+        fees = #{fees,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmations != null">
+        confirmations = #{confirmations,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="sizeondisk != null">
+        sizeOnDisk = #{sizeondisk,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="totalInput != null">
+        total_input = #{totalInput,jdbcType=DOUBLE},
+      </if>
+      <if test="totalOutput != null">
+        total_output = #{totalOutput,jdbcType=DOUBLE},
+      </if>
+      <if test="feePerByte != null">
+        fee_per_byte = #{feePerByte,jdbcType=DOUBLE},
+      </if>
+      <if test="feePerWeightUnit != null">
+        fee_per_weight_unit = #{feePerWeightUnit,jdbcType=DOUBLE},
+      </if>
+      <if test="blockId != null">
+        block_id = #{blockId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.cjf.bitcoinexplorerback.po.Transaction">
+    update transaction
+    set txid = #{txid,jdbcType=CHAR},
+      txhash = #{txhash,jdbcType=CHAR},
+      time = #{time,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DOUBLE},
+      fees = #{fees,jdbcType=DOUBLE},
+      confirmations = #{confirmations,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      sizeOnDisk = #{sizeondisk,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      total_input = #{totalInput,jdbcType=DOUBLE},
+      total_output = #{totalOutput,jdbcType=DOUBLE},
+      fee_per_byte = #{feePerByte,jdbcType=DOUBLE},
+      fee_per_weight_unit = #{feePerWeightUnit,jdbcType=DOUBLE},
+      block_id = #{blockId,jdbcType=INTEGER}
+    where transaction_id = #{transactionId,jdbcType=INTEGER}
+  </update>
+</mapper>
