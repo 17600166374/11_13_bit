@@ -10,7 +10,7 @@
     <!--指定特定数据库的jdbc驱动jar包的位置 -->
     <classPathEntry location="D:\software\mysql-connector-java-8.0.18.jar"/>
 
-    <context id="bitcoin1702ctables"    targetRuntime="MyBatis3">
+    <context id="bitcoinexplorer1702ctables"    targetRuntime="MyBatis3">
         <!-- optional，旨在创建class时，对注释进行控制 -->
         <commentGenerator>
             <property name="suppressDate" value="true"/>
@@ -18,7 +18,7 @@
         </commentGenerator>
 
         <!--数据库链接信息-->
-        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/dbschema?serverTimezone=UTC" userId="root" password="jp4jx*">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/bitcoinexplorer1702c?serverTimezone=UTC" userId="root" password="123456">
         </jdbcConnection>
 
         <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
