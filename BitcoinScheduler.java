@@ -11,9 +11,11 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class BitcoinScheduler {
@@ -23,7 +25,7 @@ public class BitcoinScheduler {
 
     @Autowired
     private SimpMessagingTemplate simpMessAginTemplate;
-
+    
     private JSONObject originMempoolTx =new JSONObject();
 
 
@@ -39,6 +41,14 @@ public class BitcoinScheduler {
     public void syMempoolTx(){
         JSONObject nempoolContenTs = bitcoinRest.getMempoolContents();
 
+        int size = originMempoolTx.size();
+        int newSize = nempoolContenTs.size();
+        if(newSize <= size){
+            return ;
+        }
+
+
+
         for(Map.Entry<String,Object> stringObjectEntry:nempoolContenTs.entrySet())
         {
             String key = stringObjectEntry.getKey();
@@ -51,8 +61,17 @@ public class BitcoinScheduler {
         }
 
         }
+        List<JSONObject> deltaTxesJson = deltaTx.stream().map(t -> {
+            JSONObject tJson = new JSONObject();
 
-        simpMessAginTemplate.convertAndSend("bitcoin/deltaTx",deltaTx);
+            tJson.put("txid", t.getInteger("txid"));
+            tJson.put("wtxid", t.getString("wtxid"));
+            tJson.put("time", t.getLong("time"));
+            return tJson;
+        }).collect(Collectors.toList());
+        List<JSONObject> sortDeltaTxesJson = deltaTxesJson.stream().sorted(Comparator.comparingLong(t -> t.getLong("time"))).collect(Collectors.toList());
+
+        simpMessAginTemplate.convertAndSend("bitcoin/deltaTx",sortDeltaTxesJson);
         deltaTx =new LinkedList<>();
         originMempoolTx = nempoolContenTs;
 
